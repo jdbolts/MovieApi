@@ -1,18 +1,15 @@
 <?php
 
-/** @var \Laravel\Lumen\Routing\Router $router */
-
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
-*/
+/** @var Router $router */
+use Laravel\Lumen\Routing\Router;
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
+});
+
+$router->group(['prefix' => 'api', 'namespace' => 'Api'], function () use ($router) {
+    $router->get('movie', ['uses' => 'MovieController@list']);
+    $router->get('movie/{id}', ['uses' => 'MovieController@get']);
+    $router->post('movie', ['uses' => 'MovieController@create']);
+    $router->delete('movie/{id}', ['uses' => 'MovieController@delete']);
 });
